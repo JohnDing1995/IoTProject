@@ -248,21 +248,10 @@ void moveForward()
 
 {
   stopMotors();
-  //  digitalWrite(MOTOR_FRONT_LEFT_P,HIGH);
-  //  digitalWrite(MOTOR_FRONT_LEFT_N,LOW);
-  //
-  //  digitalWrite(MOTOR_BACK_LEFT_P,HIGH);
-  //  digitalWrite(MOTOR_BACK_LEFT_N,LOW);
-  //
-  //  digitalWrite(MOTOR_FRONT_RIGHT_P,HIGH);
-  //  digitalWrite(MOTOR_FRONT_RIGHT_N,LOW);
-  //
-  //  digitalWrite(MOTOR_BACK_RIGHT_P,HIGH);
-  //  digitalWrite(MOTOR_BACK_RIGHT_N,LOW);
   Serial.println("Forward");
-  analogWrite(LEFT_PWM, 125);
+  analogWrite(LEFT_PWM, 50);
   digitalWrite(LEFT_DIR, HIGH);
-  analogWrite(RIGHT_PWM, 125);
+  analogWrite(RIGHT_PWM, 50);
   digitalWrite(RIGHT_DIR, HIGH);
 }
 
@@ -309,9 +298,9 @@ void moveBack()
 {
   stopMotors();
   Serial.println("Backward");
-  analogWrite(LEFT_PWM, 125);
+  analogWrite(LEFT_PWM, 50);
   digitalWrite(LEFT_DIR, LOW);
-  analogWrite(RIGHT_PWM, 125);
+  analogWrite(RIGHT_PWM, 50);
   digitalWrite(RIGHT_DIR, LOW);
 }
 
@@ -321,9 +310,9 @@ void turnLeft(uint8_t data)
 {
   stopMotors();
   Serial.println("Left");
-  analogWrite(LEFT_PWM, 125);
+  analogWrite(LEFT_PWM, 50);
   digitalWrite(LEFT_DIR, LOW);
-  analogWrite(RIGHT_PWM, 125);
+  analogWrite(RIGHT_PWM, 50);
   digitalWrite(RIGHT_DIR, HIGH);
   movementTime = data;
   tempMovementTime = (uint16_t)(millis() / 1000);
@@ -335,9 +324,9 @@ void turnRight(uint8_t data)
 {
   stopMotors();
   Serial.println("Right");
-  analogWrite(LEFT_PWM, 125);
+  analogWrite(LEFT_PWM, 50);
   digitalWrite(LEFT_DIR, HIGH);
-  analogWrite(RIGHT_PWM, 125);
+  analogWrite(RIGHT_PWM, 50);
   digitalWrite(RIGHT_DIR, LOW);
   movementTime = data;
   tempMovementTime = (uint16_t)(millis() / 1000);
