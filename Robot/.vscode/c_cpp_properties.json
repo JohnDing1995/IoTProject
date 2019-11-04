@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/root/Arduino/hardware/esp8266com/esp8266/**",
+                "/root/.arduino15/packages/esp8266/tools/**",
+                "/root/.arduino15/packages/esp8266/hardware/esp8266/2.5.2/**"
+            ],
+            "forcedInclude": []
+        }
+    ]
+}

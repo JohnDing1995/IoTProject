@@ -1,0 +1,5 @@
+{
+    "board": "esp8266com:esp8266:arduino-esp8266",
+    "configuration": "BoardModel=unowifideved,xtal=160,vt=flash,exception=legacy,ssl=all,eesz=4M2M,ip=lm2f,dbg=Serial,lvl=None____,wipe=none,baud=115200",
+    "port": "/dev/ttyS0"
+}
