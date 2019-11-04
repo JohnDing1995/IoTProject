@@ -1,0 +1,6 @@
+c-libraries
+env/
+venv/
+.idea/
+__pycache__/
+cmake-build-debug
