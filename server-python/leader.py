@@ -1,4 +1,5 @@
 import struct
+from time import sleep
 
 import paho.mqtt.client as mqtt
 
@@ -21,6 +22,10 @@ def on_connect(client, userdata, flags, rc):
 client = mqtt.Client()
 client.connect(BROKER_IP, BROKER_PORT)
 client.publish(topic="control", payload=struct.pack('hhi', 1, 7, 2), qos=1, retain=False)
+sleep(2)
+client.publish(topic="control", payload=struct.pack('hhi', 2, 7, 1), qos=1, retain=False)
+sleep(2)
+client.publish(topic="control", payload=struct.pack('hhi', 4, 7, 10), qos=1, retain=False)
 client.on_connect = on_connect
 #client.on_message = on_message
 client.loop_forever()
