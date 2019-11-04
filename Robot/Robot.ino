@@ -75,7 +75,7 @@ uint8_t matrix[NODECOUNT][NODECOUNT] = {{0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 
 // TODO: Change the below settings
 char ssid[] = "HUAWEI-XMF6TV";         // SSID of the network
 char password[] = "........";          // Password for the network
-unsigned char ip[] = {192, 168, 4, 4}; // IP Address of the SERVER
+unsigned char ip[] = {192, 168, 4, 11}; // IP Address of the SERVER
 
 uint8_t Command = 0;
 long Rssi = 0;
