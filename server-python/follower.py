@@ -1,11 +1,8 @@
-import enum
-import os
-import ctypes
-import socket
-import paho.mqtt.client as mqtt
 import struct
 
-from config import BROKER_ADDR
+import paho.mqtt.client as mqtt
+
+from config import BROKER_IP, BROKER_PORT
 from control_api.api import move_forward, init_socket, Actions, stop, move_backward, rotate_left, rotate_right
 
 command_switcher = {
@@ -23,8 +20,9 @@ def on_message(client, userdata, msg):
     control_func = command_switcher.get(payload[0], '')
     control_func(*payload[1:])
 
+
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    print("Connected with result code " + str(rc))
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
@@ -36,6 +34,6 @@ init_socket()
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
-client.connect(BROKER_ADDR, 1883, 60)
+client.connect(BROKER_IP, BROKER_PORT, 60)
 
 client.loop_forever()
