@@ -1,8 +1,15 @@
-import paho.mqtt.client as mqtt
+import paho.mqtt.client as paho
+import time
 
-broker_url = "0.0.0.0"
-broker_port = 1883
+def on_publish(client, userdata, mid):
+    print("mid: "+str(mid))
+ 
+client = paho.Client()
+client.on_publish = on_publish
+client.connect("broker.mqttdashboard.com", 1883)
+client.loop_start()
 
-client = mqtt.Client()
-client.connect(broker_url, broker_port)
-client.subscribe("TestingTopic", qos=1)
+while True:
+    temperature = 1
+    (rc, mid) = client.publish("encyclopedia/temperature", str(temperature), qos=1)
+    time.sleep(1)
