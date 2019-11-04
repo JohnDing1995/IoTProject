@@ -1,9 +1,8 @@
-import os
-import ctypes
-import socket
+import struct
+
 import paho.mqtt.client as mqtt
 
-from control_api.api import move_forward, init_socket
+from config import BROKER_IP, BROKER_PORT
 
 broker_url = "0.0.0.0"
 broker_port = 1883
@@ -18,11 +17,10 @@ def on_connect(client, userdata, flags, rc):
     # reconnect then subscriptions will be renewed.
     client.subscribe("control")
 
+
 client = mqtt.Client()
-client.connect(broker_url, broker_port)
-client.publish(topic="TestingTopic", payload="TestingPayload", qos=1, retain=False)
-
-
-#client.on_connect = on_connect
+client.connect(BROKER_IP, BROKER_PORT)
+client.publish(topic="control", payload=struct.pack('hhi', 1, 7, 2), qos=1, retain=False)
+client.on_connect = on_connect
 #client.on_message = on_message
-
+client.loop_forever()
