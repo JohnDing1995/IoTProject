@@ -1,4 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/dingruiyang/Projects/adhoc-networks-master/Source/Server
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/dingruiyang/Projects/adhoc-networks-master/Source/Server/cmake-build-debug
