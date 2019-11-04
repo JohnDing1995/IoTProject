@@ -13,7 +13,7 @@ def init_socket():
         conn, addr = s.accept()
         with conn:
             print('Connected by', addr)
-            lib.create_packet.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_char, POINTER(ctypes.c_char_p)]
+           # lib.create_packet.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_char, POINTER(ctypes.c_char_p)]
             lib.send_forward_time(1, 7, 0)
             while True:
                 data = conn.recv(1024)
