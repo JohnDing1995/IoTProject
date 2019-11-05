@@ -89,34 +89,34 @@ class LeaderPS4(object):
                     self.client.publish(topic="control", payload=struct.pack('hhi', 1, FOLLOWER_ID, 0), qos=QOS,
                                         retain=False)
                     move_forward(LEADER_ID, 0)
-                    sleep(0.5)
+                    sleep(1)
                 #Down    
                 elif self.hat_data[self.HAT_1][1] == -1:
                     print("Down")
                     self.client.publish(topic="control", payload=struct.pack('hhi', 4, FOLLOWER_ID, 0), qos=QOS,
                                         retain=False)
                     move_backward(LEADER_ID, 0)
-                    sleep(0.5)
+                    sleep(1)
                 #Right
                 elif self.hat_data[self.HAT_1][0] == 1:
                     print("Left")
                     self.client.publish(topic="control", payload=struct.pack('hhi', 3, FOLLOWER_ID, 2), qos=QOS,
                                         retain=False)
                     rotate_left(LEADER_ID, 2)
-                    sleep(0.5)
+                    sleep(1)
                 #Left
                 elif self.hat_data[self.HAT_1][0] == -1:
                     print("Right")
                     self.client.publish(topic="control", payload=struct.pack('hhi', 2, FOLLOWER_ID, 2), qos=QOS,
                                         retain=False)
                     rotate_right(LEADER_ID, 2)
-                    sleep(0.5)
+                    sleep(1)
                 elif self.button_data[self.BUTTON_SQUARE] == True:
                     print("Stop")
                     self.client.publish(topic="control", payload=struct.pack('hhi', 0, FOLLOWER_ID, 0), qos=QOS,
                                         retain=False)
                     stop(LEADER_ID, 0)
-                    sleep(0.5)
+                    sleep(1)
 
 
 

@@ -314,6 +314,8 @@ int get_obstacle_data(int src,int dst,int sensor_num) {
     }
       printf("\n");
 #endif
+    printf("RESULT: \n");
+    printf(value[0]);
     return value[0];
 }
 
