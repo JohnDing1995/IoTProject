@@ -75,6 +75,12 @@ class LeaderPS4(object):
                 self.hat_data[i] = (0, 0)
 
         while True:
+            #Read distance
+            if get_distance(6) <= 5:
+                self.client.publish(topic="control", payload=struct.pack('hhi', 0, FOLLOWER_ID, 0), qos=QOS,
+                                        retain=False)
+                stop(LEADER_ID, 0)
+            
             for event in pygame.event.get():
                 if event.type == pygame.JOYHATMOTION:
                     self.hat_data[event.hat] = event.value
