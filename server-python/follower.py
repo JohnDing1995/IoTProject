@@ -1,9 +1,10 @@
 import struct
+from time import sleep
 
 import paho.mqtt.client as mqtt
 
 from config import BROKER_IP, BROKER_PORT
-from control_api.api import move_forward, init_socket, Actions, stop, move_backward, rotate_left, rotate_right
+from control_api.api import *
 
 command_switcher = {
     0: stop,
@@ -31,6 +32,9 @@ def on_connect(client, userdata, flags, rc):
 
 # Init the connection with the server.
 init_socket()
+while True:
+    sleep(1)
+    print(get_distance(7))
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
