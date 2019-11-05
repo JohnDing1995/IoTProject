@@ -8,6 +8,7 @@ lib_control = os.path.abspath(
 libc = ctypes.CDLL(lib_control)
 
 
+
 class Actions(Enum):
     STOP = 0
     FORWARD = 1
@@ -34,3 +35,9 @@ def rotate_right(target: int, seconds: int):
 def init_socket():
     result = libc.init(1)
     print(result)
+
+def get_distance(target: int) -> int:
+
+    result = libc.get_obstacle_data(1, target, 3)
+    return result
+
