@@ -9,6 +9,8 @@ import paho.mqtt.client as mqtt
 from control_api.api import *
 from config import BROKER_IP, BROKER_PORT
 
+LEADER_ID = 7
+
 class LeaderPS4(object):
 
     controller = None
@@ -18,9 +20,6 @@ class LeaderPS4(object):
     # Labels for DS4 controller hats (Only one hat control)
     HAT_1 = 0
     BUTTON_SQUARE = 3
-
-    broker_url = "0.0.0.0"
-    broker_port = 1883
 
     def init(self):
         """Initialize the joystick components"""
@@ -60,19 +59,27 @@ class LeaderPS4(object):
                 #Up
                 if self.hat_data[self.HAT_1][1] == 1:
                     print("Up")
-                    #client.publish(topic="control", payload=struct.pack('hhi', 1, 6, 0), qos=1, retain=False)
-                    #move_forward(6, 0)
+                    client.publish(topic="control", payload=struct.pack('hhi', 1, LEADER_ID, 0), qos=1, retain=False)
+                    move_forward(LEADER_ID, 0)
                 #Down    
                 elif self.hat_data[self.HAT_1][1] == -1:
                     print("Down")
+                    client.publish(topic="control", payload=struct.pack('hhi', 4, LEADER_ID, 0), qos=1, retain=False)
+                    move_backward(LEADER_ID, 0)
                 #Right
                 elif self.hat_data[self.HAT_1][0] == 1:
                     print("Right")
+                    client.publish(topic="control", payload=struct.pack('hhi', 3, LEADER_ID, 0), qos=1, retain=False)
+                    rotate_right(LEADER_ID, 1)
                 #Left
                 elif self.hat_data[self.HAT_1][0] == -1:
                     print("Left")
+                    client.publish(topic="control", payload=struct.pack('hhi', 2, LEADER_ID, 0), qos=1, retain=False)
+                    rotate_left(LEADER_ID, 1)
                 elif self.button_data[self.BUTTON_SQUARE] == True:
                     print("Stop")
+                    client.publish(topic="control", payload=struct.pack('hhi', 0, LEADER_ID, 0), qos=1, retain=False)
+                    stop(LEADER_ID, 0)
 
     def on_message(client, userdata, msg):
         print(msg.topic + " " + str(msg.payload))
