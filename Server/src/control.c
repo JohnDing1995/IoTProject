@@ -233,6 +233,7 @@ long get_RSSI(int src,int dst) {
     char data;
     int client_index = get_index(dst_id);
     
+    
     data = GET_RSSI;
     create_packet(src,dst,sizeof(data),&data);
     memset(client_message,'\0',1024);
@@ -320,23 +321,16 @@ int get_obstacle_data(int src,int dst,int sensor_num) {
 
     int ret = 0;
     unsigned char *value = NULL;
-
-/*    if (sensor_num == ULTRASONIC_LEFT) {
-        char data;
-        data = GET_OBSTACLE_LEFT;
-        create_packet(src,dst,sizeof(data),&data);
-    }
-    if (sensor_num == ULTRASONIC_RIGHT) {
-      char data = GET_OBSTACLE_RIGHT;
-      create_packet(src,dst,sizeof(data),&data);
-    }*/
+    char client_message[1024];
+    int dst_id = 6;
+    
     if (sensor_num == ULTRASONIC_FRONT) {
       char data = GET_OBSTACLE_FRONT;
       create_packet(src,dst,sizeof(data),&data);
-
     }
+
     memset(client_message,'\0',1024);
-    int client_index = get_index(dst_id);
+    int client_index = get_index(6);
     ret = recv(client_sock[client_index] , client_message ,1024, 0);
    
     value = get_data(client_message);

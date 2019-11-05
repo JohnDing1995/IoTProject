@@ -33,8 +33,8 @@ def on_connect(client, userdata, flags, rc):
 # Init the connection with the server.
 init_socket()
 while True:
-    sleep(1)
-    print(get_distance(7))
+    sleep(3)
+    print(get_distance(6))
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
