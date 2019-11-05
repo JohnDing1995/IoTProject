@@ -54,6 +54,8 @@
 
 #define NODECOUNT 16
 
+#define PWM_SPEED 20
+
 //Matrix - Robot ID 0 to ID 15
 uint8_t matrix[NODECOUNT][NODECOUNT] = {{0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1},
                                         {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -73,9 +75,9 @@ uint8_t matrix[NODECOUNT][NODECOUNT] = {{0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 
                                         {0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0}};
 
 // TODO: Change the below settings
-char ssid[] = "HUAWEI-XMF6TV";         // SSID of the network
+char ssid[] = "ap";         // SSID of the network
 char password[] = "........";          // Password for the network
-unsigned char ip[] = {192, 168, 4, 11}; // IP Address of the SERVER
+unsigned char ip[] = {192, 168, 43, 13}; // IP Address of the SERVER
 
 uint8_t Command = 0;
 long Rssi = 0;
@@ -249,9 +251,9 @@ void moveForward()
 {
   stopMotors();
   Serial.println("Forward");
-  analogWrite(LEFT_PWM, 50);
+  analogWrite(LEFT_PWM, PWM_SPEED);
   digitalWrite(LEFT_DIR, HIGH);
-  analogWrite(RIGHT_PWM, 50);
+  analogWrite(RIGHT_PWM, PWM_SPEED);
   digitalWrite(RIGHT_DIR, HIGH);
 }
 
@@ -298,9 +300,9 @@ void moveBack()
 {
   stopMotors();
   Serial.println("Backward");
-  analogWrite(LEFT_PWM, 50);
+  analogWrite(LEFT_PWM, PWM_SPEED);
   digitalWrite(LEFT_DIR, LOW);
-  analogWrite(RIGHT_PWM, 50);
+  analogWrite(RIGHT_PWM, PWM_SPEED);
   digitalWrite(RIGHT_DIR, LOW);
 }
 
@@ -310,9 +312,9 @@ void turnLeft(uint8_t data)
 {
   stopMotors();
   Serial.println("Left");
-  analogWrite(LEFT_PWM, 50);
+  analogWrite(LEFT_PWM, PWM_SPEED);
   digitalWrite(LEFT_DIR, LOW);
-  analogWrite(RIGHT_PWM, 50);
+  analogWrite(RIGHT_PWM, PWM_SPEED);
   digitalWrite(RIGHT_DIR, HIGH);
   movementTime = data;
   tempMovementTime = (uint16_t)(millis() / 1000);
@@ -324,9 +326,9 @@ void turnRight(uint8_t data)
 {
   stopMotors();
   Serial.println("Right");
-  analogWrite(LEFT_PWM, 50);
+  analogWrite(LEFT_PWM, PWM_SPEED);
   digitalWrite(LEFT_DIR, HIGH);
-  analogWrite(RIGHT_PWM, 50);
+  analogWrite(RIGHT_PWM, PWM_SPEED);
   digitalWrite(RIGHT_DIR, LOW);
   movementTime = data;
   tempMovementTime = (uint16_t)(millis() / 1000);
