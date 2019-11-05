@@ -29,6 +29,8 @@
 #define YELLOWLED A12
 #define ORANGELED 42
 
+
+
 #define TIMER1COUNT 64286 //50Hz
 
 //External commands, communicated with another robot (in Adhoc mode) or TCP
@@ -77,7 +79,11 @@ uint8_t matrix[NODECOUNT][NODECOUNT] = {{0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 
 // TODO: Change the below settings
 char ssid[] = "ap";         // SSID of the network
 char password[] = "........";          // Password for the network
+<<<<<<< HEAD
 unsigned char ip[] = {192, 168, 43, 13}; // IP Address of the SERVER
+=======
+unsigned char ip[] = {192, 168, 43, 53}; // IP Address of the SERVER
+>>>>>>> d3f2acae91c9940ec0177bf25d1b0d565a69993f
 
 uint8_t Command = 0;
 long Rssi = 0;
@@ -251,9 +257,15 @@ void moveForward()
 {
   stopMotors();
   Serial.println("Forward");
+<<<<<<< HEAD
   analogWrite(LEFT_PWM, PWM_SPEED);
   digitalWrite(LEFT_DIR, HIGH);
   analogWrite(RIGHT_PWM, PWM_SPEED);
+=======
+  analogWrite(LEFT_PWM, 25);
+  digitalWrite(LEFT_DIR, HIGH);
+  analogWrite(RIGHT_PWM, 25);
+>>>>>>> d3f2acae91c9940ec0177bf25d1b0d565a69993f
   digitalWrite(RIGHT_DIR, HIGH);
 }
 
@@ -300,9 +312,15 @@ void moveBack()
 {
   stopMotors();
   Serial.println("Backward");
+<<<<<<< HEAD
   analogWrite(LEFT_PWM, PWM_SPEED);
   digitalWrite(LEFT_DIR, LOW);
   analogWrite(RIGHT_PWM, PWM_SPEED);
+=======
+  analogWrite(LEFT_PWM, 25);
+  digitalWrite(LEFT_DIR, LOW);
+  analogWrite(RIGHT_PWM, 25);
+>>>>>>> d3f2acae91c9940ec0177bf25d1b0d565a69993f
   digitalWrite(RIGHT_DIR, LOW);
 }
 
@@ -312,9 +330,15 @@ void turnLeft(uint8_t data)
 {
   stopMotors();
   Serial.println("Left");
+<<<<<<< HEAD
   analogWrite(LEFT_PWM, PWM_SPEED);
   digitalWrite(LEFT_DIR, LOW);
   analogWrite(RIGHT_PWM, PWM_SPEED);
+=======
+  analogWrite(LEFT_PWM, 25);
+  digitalWrite(LEFT_DIR, LOW);
+  analogWrite(RIGHT_PWM, 25);
+>>>>>>> d3f2acae91c9940ec0177bf25d1b0d565a69993f
   digitalWrite(RIGHT_DIR, HIGH);
   movementTime = data;
   tempMovementTime = (uint16_t)(millis() / 1000);
@@ -326,9 +350,15 @@ void turnRight(uint8_t data)
 {
   stopMotors();
   Serial.println("Right");
+<<<<<<< HEAD
   analogWrite(LEFT_PWM, PWM_SPEED);
   digitalWrite(LEFT_DIR, HIGH);
   analogWrite(RIGHT_PWM, PWM_SPEED);
+=======
+  analogWrite(LEFT_PWM, 25);
+  digitalWrite(LEFT_DIR, HIGH);
+  analogWrite(RIGHT_PWM, 25);
+>>>>>>> d3f2acae91c9940ec0177bf25d1b0d565a69993f
   digitalWrite(RIGHT_DIR, LOW);
   movementTime = data;
   tempMovementTime = (uint16_t)(millis() / 1000);
@@ -483,7 +513,7 @@ void sendPacket(uint8_t src, uint8_t dst, uint8_t internal, uint8_t isTCP, uint8
 void setup()
 {
   Serial.begin(115200);
-  setID(6);
+  setID(7);
   nodeID = getID();
   packetSerial.setPacketHandler(&onPacket);
   packetSerial.begin(115200);
