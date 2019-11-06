@@ -1,5 +1,6 @@
 import struct
-from time import sleep
+from threading import Thread
+from helper import get_obstacle
 
 import paho.mqtt.client as mqtt
 
@@ -32,11 +33,14 @@ def on_connect(client, userdata, flags, rc):
 
 # Init the connection with the server.
 init_socket()
-while True:
-    sleep(3)
-    print(get_distance(6))
+get_obstacle_thread = Thread(target=get_obstacle, args=(0.5, False))
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect(BROKER_IP, BROKER_PORT, 1000)
-client.loop_forever()
+get_obstacle_thread.run()
+try:
+    client.loop_forever()
+except KeyboardInterrupt:
+    print('Exit')
+    get_obstacle_thread.join()

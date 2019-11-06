@@ -8,11 +8,11 @@ from time import sleep
 import paho.mqtt.client as mqtt
 
 from control_api.api import *
-from config import BROKER_IP, BROKER_PORT
+from config import BROKER_IP, BROKER_PORT, LEADER_ID, FOLLOWER_ID, QOS
 
-LEADER_ID = 6
-FOLLOWER_ID = 7
-QOS = 2
+import threading
+
+from helper import *
 
 
 def on_message(client, userdata, msg):
@@ -33,18 +33,13 @@ def on_publish(client, userdata, mid):
 def on_disconnect(client, userdata, rc):
     print("client disconnected ok")
 
-def getDistance(botID, client):
-    if get_distance(botID) <= 10:
-            client.publish(topic="control", payload=struct.pack('hhi', 0, FOLLOWER_ID, 0), qos=QOS,
-                                        retain=False)
-            stop(LEADER_ID, 0)
+
 
 class LeaderPS4(object):
 
     controller = None
     button_data = None
     hat_data = None
-
     # Labels for DS4 controller hats (Only one hat control)
     HAT_1 = 0
     BUTTON_SQUARE = 3
@@ -72,6 +67,8 @@ class LeaderPS4(object):
         self.client.on_disconnect = on_disconnect
         self.client.connect(BROKER_IP, BROKER_PORT)
         self.client.loop_start()
+        self.detection = threading.Thread(target=get_obstacle, args=(0.5, True, self.client))
+        self.detection.start()
 
     def listen(self):
         """Listen for events to happen"""
@@ -137,5 +134,8 @@ class LeaderPS4(object):
 if __name__ == "__main__":
     init_socket()
     leader = LeaderPS4()
-    leader.init()
-    leader.listen()
+    try:
+        leader.init()
+        leader.listen()
+    except KeyboardInterrupt:
+        leader.detection.join()
