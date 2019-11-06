@@ -38,5 +38,5 @@ while True:
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
-client.connect(BROKER_IP, BROKER_PORT, 60)
+client.connect(BROKER_IP, BROKER_PORT, 1000)
 client.loop_forever()

@@ -2,6 +2,7 @@ import os
 import pprint
 import pygame
 import struct
+import threading
 from time import sleep
 
 import paho.mqtt.client as mqtt
@@ -32,6 +33,11 @@ def on_publish(client, userdata, mid):
 def on_disconnect(client, userdata, rc):
     print("client disconnected ok")
 
+def getDistance(botID, client):
+    if get_distance(botID) <= 10:
+            client.publish(topic="control", payload=struct.pack('hhi', 0, FOLLOWER_ID, 0), qos=QOS,
+                                        retain=False)
+            stop(LEADER_ID, 0)
 
 class LeaderPS4(object):
 
@@ -65,21 +71,21 @@ class LeaderPS4(object):
         self.client.on_publish = on_publish
         self.client.on_disconnect = on_disconnect
         self.client.connect(BROKER_IP, BROKER_PORT)
+        self.client.loop_start()
 
     def listen(self):
         """Listen for events to happen"""
-        
         if not self.hat_data:
             self.hat_data = {}
             for i in range(self.controller.get_numhats()):
                 self.hat_data[i] = (0, 0)
 
         while True:
-            #Read distance
-            if get_distance(6) <= 5:
-                self.client.publish(topic="control", payload=struct.pack('hhi', 0, FOLLOWER_ID, 0), qos=QOS,
-                                        retain=False)
-                stop(LEADER_ID, 0)
+            for i in range(self.controller.get_numhats()):
+                self.hat_data[i] = (0, 0)
+
+            for i in range(self.controller.get_numbuttons()): 
+                self.button_data[i] = False
             
             for event in pygame.event.get():
                 if event.type == pygame.JOYHATMOTION:
@@ -95,37 +101,38 @@ class LeaderPS4(object):
                     self.client.publish(topic="control", payload=struct.pack('hhi', 1, FOLLOWER_ID, 0), qos=QOS,
                                         retain=False)
                     move_forward(LEADER_ID, 0)
-                    sleep(1)
+                    self.hat_data[self.HAT_1] = (0, 0)
+                    
                 #Down    
                 elif self.hat_data[self.HAT_1][1] == -1:
                     print("Down")
                     self.client.publish(topic="control", payload=struct.pack('hhi', 4, FOLLOWER_ID, 0), qos=QOS,
                                         retain=False)
                     move_backward(LEADER_ID, 0)
-                    sleep(1)
+                    self.hat_data[self.HAT_1] = (0, 0)
+                
                 #Right
                 elif self.hat_data[self.HAT_1][0] == 1:
                     print("Left")
                     self.client.publish(topic="control", payload=struct.pack('hhi', 3, FOLLOWER_ID, 2), qos=QOS,
                                         retain=False)
                     rotate_left(LEADER_ID, 2)
-                    sleep(1)
+                    self.hat_data[self.HAT_1] = (0, 0)
+                    
                 #Left
                 elif self.hat_data[self.HAT_1][0] == -1:
                     print("Right")
                     self.client.publish(topic="control", payload=struct.pack('hhi', 2, FOLLOWER_ID, 2), qos=QOS,
                                         retain=False)
                     rotate_right(LEADER_ID, 2)
-                    sleep(1)
+                    self.hat_data[self.HAT_1] = (0, 0)
+                    
                 elif self.button_data[self.BUTTON_SQUARE] == True:
                     print("Stop")
                     self.client.publish(topic="control", payload=struct.pack('hhi', 0, FOLLOWER_ID, 0), qos=QOS,
                                         retain=False)
                     stop(LEADER_ID, 0)
-                    sleep(1)
-
-
-
+                    self.button_data[self.BUTTON_SQUARE] = False
 
 if __name__ == "__main__":
     init_socket()

@@ -334,13 +334,13 @@ int get_obstacle_data(int src,int dst,int sensor_num) {
     ret = recv(client_sock[client_index] , client_message ,1024, 0);
    
     value = get_data(client_message);
-#ifdef __DEBUG__
-    int i;
-    for(i = 0 ; i < ret; i++) {
-      printf("0x%x ",client_message[i]);
-    }
-      printf("\n");
-#endif
+// #ifdef __DEBUG__
+//     int i;
+//     for(i = 0 ; i < ret; i++) {
+//       printf("0x%x ",client_message[i]);
+//     }
+//       printf("\n");
+// #endif
     return value[0];
 }
 
@@ -485,9 +485,9 @@ void create_packet(int src,int dst, char length,char *data)
     }
 
     packet[11 + length - 1]= END_MARKER;
-#ifdef __DEBUG__
-    printf(" Sending to sockfd %d\n",client_sock[client_index]);
-#endif
+//#ifdef __DEBUG__
+//    printf(" Sending to sockfd %d\n",client_sock[client_index]);
+//#endif
     send_cmd(client_sock[client_index],packet,11 + length);
 
     free(packet);
