@@ -28,6 +28,7 @@ class Follower(object):
         # if true, follower need to first move forward to the turning point of the leader before turing.
         if DELAY_TURN:
             if payload[0] in [2, 3]:
+                stop(*payload[1:])
                 self.last_dist = get_distance(payload[1])
                 print("Distance with front car is {}".format(self.last_dist))
                 self.last_operation = control_func
@@ -38,10 +39,11 @@ class Follower(object):
                     # then makes the turn.
                     if self.last_operation in [rotate_right, rotate_left]:
                         print("Last operation was a turn")
-                        forward_sec = (self.last_dist + 10) / 8
+                        forward_sec = (10 + self.last_dist) / 7 + 1
                         print("Need to move forward for {} seconds".format(forward_sec))
                         move_forward(payload[1], int(forward_sec))
-                        sleep(forward_sec)
+                        # move_forward_by_distance(payload[1], str(self.last_dist+10))
+                        sleep(forward_sec - 1)
                         print("Now repeating last operation for {} sec".format(self.last_sec))
                         self.last_operation(payload[1], self.last_sec)
                         sleep(self.last_sec)

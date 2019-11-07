@@ -22,6 +22,10 @@ def move_forward(target: int, seconds: int):
     libc.send_forward_time(1, target, seconds)
 
 
+def move_forward_by_distance(target: int, distance: str):
+    dist = ctypes.c_char.from_buffer(bytearray(distance))
+    libc.send_forward_dist(1, target, dist)
+
 def move_backward(target: int, seconds: int):
     libc.send_reverse_time(1, target, seconds)
 

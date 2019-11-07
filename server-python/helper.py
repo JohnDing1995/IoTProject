@@ -8,7 +8,7 @@ from paho.mqtt.client import Client
 def get_obstacle(interval_seconds: float, is_leader, mqtt: Client=None):
 
     while True:
-        if get_distance(LEADER_ID if is_leader else FOLLOWER_ID) <= 10:
+        if get_distance(LEADER_ID if is_leader else FOLLOWER_ID) <= 5:
             if is_leader:
                 mqtt.publish(topic="control", payload=struct.pack('hhi', 0, FOLLOWER_ID, 0), qos=QOS,
                                retain=False)
