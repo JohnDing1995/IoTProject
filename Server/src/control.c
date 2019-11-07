@@ -322,7 +322,7 @@ int get_obstacle_data(int src,int dst,int sensor_num) {
     int ret = 0;
     unsigned char *value = NULL;
     char client_message[1024];
-    int dst_id = 6;
+    int dst_id = 7;
     
     if (sensor_num == ULTRASONIC_FRONT) {
       char data = GET_OBSTACLE_FRONT;
@@ -330,7 +330,7 @@ int get_obstacle_data(int src,int dst,int sensor_num) {
     }
 
     memset(client_message,'\0',1024);
-    int client_index = get_index(6);
+    int client_index = get_index(dst_id);
     ret = recv(client_sock[client_index] , client_message ,1024, 0);
    
     value = get_data(client_message);

@@ -42,7 +42,6 @@ def init_socket():
     result = libc.init(1)
     print(result)
 
-
 def get_distance(target: int) -> int:
     result = libc.get_obstacle_data(1, target, 3)
     return result
